@@ -39,7 +39,7 @@ class CRM_Clonecontact_BAO_Clonecontact {
    *
    * @param integer $contactId
    */
-  public static function clonecontact() {
+  public static function cloneContact() {
     $contactId = CRM_Utils_Request::retrieve('cid', 'Positive', CRM_Core_DAO::$_nullObject, TRUE);
 
     $clonedContactId = self::cloneContactValues($contactId);
@@ -65,7 +65,7 @@ class CRM_Clonecontact_BAO_Clonecontact {
       'cid' => $clonedContactId,
     );
     CRM_Core_Session::setStatus(
-      ts('The contact has been cloned. Click <a href="%1">here</a> to view.',
+      ts('The contact has been cloned. <a href="%1">Click here</a> to view.',
       array(1 => CRM_Utils_System::url('civicrm/contact/view', $params))),
       ts('Saved'), 'success');
     $params['cid'] = $contactId;
@@ -266,7 +266,9 @@ class CRM_Clonecontact_BAO_Clonecontact {
     foreach ($participants['values'] as $participantParams) {
       $mainParticipantId = $participantParams['id'];
       $participantParams['contact_id'] = $clonedContactId;
-      $participantParams['participant_fee_level'] = implode(', ', $participantParams['participant_fee_level']);
+      if (is_array($participantParams['participant_fee_level'])) {
+        $participantParams['participant_fee_level'] = implode(CRM_Core_DAO::VALUE_SEPARATOR, $participantParams['participant_fee_level']);
+      }
       unset($participantParams['id'], $participantParams['participant_id'], $participantParams['contact_sub_type']);
       $result = civicrm_api3('Participant', 'create', $participantParams);
       self::cloneParticipantPayments($mainParticipantId, $result['id'], $clonedContactId);

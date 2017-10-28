@@ -2,6 +2,6 @@
 <menu>
   <item>
     <path>civicrm/clonecontact</path>
-    <page_callback>CRM_Clonecontact_BAO_Clonecontact::clonecontact</page_callback>
+    <page_callback>CRM_Clonecontact_BAO_Clonecontact::cloneContact</page_callback>
   </item>
 </menu>
