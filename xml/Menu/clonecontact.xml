@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/clonecontact</path>
+    <page_callback>CRM_Clonecontact_BAO_Clonecontact::clonecontact</page_callback>
+  </item>
+</menu>
